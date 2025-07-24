@@ -88,3 +88,34 @@ V Multi-Module Project schema
 			-ShopitBackEnd, module 2a (jar); pom.xml
 			-ShopitFrontEnd, module 2b (jar); pom.xml
 
+VI Application Architecture (Logical Layers)
+
+1. View Layer ( Thymeleaf, HTML)
+2. Controller Layer ( MVC, REST )
+3. Sercice Layer (Business classes)
+4. Repository Layer ( Entities & Interfaces)
+5. Spring Data JPA
+6. Hibernate framework Communicates with Database using JDBC Driver
+
+
+VII Requirements
+
+A. Admin Home Page
+
+	- Create header (Logo and Top level menu), Page heading and Footer
+	- Display name of the currently logged-in user
+	- Display Summary Boxes
+
+
+IX Why this ?
+
+A. Bootstrap
+	- Free and open source CSS framework
+	- Responsive, contains CSS and JS based design templates for forms, buttons, navigation, 			pagination, icons
+	- Reduce Development time
+B. JQuery
+
+	- Free and open source JS library
+	- Helps to simplify HTML DOM tree traversal and manipulation, event handling, CSS animation, 			Ajax.
+	-Provides JS API.
+

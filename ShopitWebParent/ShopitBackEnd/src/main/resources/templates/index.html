@@ -1,10 +1,65 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="UTF-8">
-<title>Shop me Admin</title>
+<meta http-equiv="Content-Type" charset="UTF-8" content="text/html">
+<meta name="viewport"
+	content="width=device-width, initial-scale =1.0 minimum-scale =1.0">
+<title>Homw - Shopit Admin</title>
+<link rel="stylesheet" type="text/css"
+	th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+<script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}"></script>
+<script type="text/javascript"
+	th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
 </head>
 <body>
-<h1>Welcome to Shopme Admin Page</h1>
+	<div class="container-fluid">
+		<nav class="navbar navbar-expand-lg navbar-light bg-light">
+			<div class="container-fluid">
+				<a class="navbar-brand" href="#"> <img
+					th:src="@{/images/ShopitLogo.png}" alt="" width="100" height="100">
+				</a>
+				<button class="navbar-toggler" type="button"
+					data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+					aria-controls="navbarSupportedContent" aria-expanded="false"
+					aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+				<div class="collapse navbar-collapse" id="navbarSupportedContent">
+					<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+						<li class="nav-item"><a class="nav-link active"
+							aria-current="page" th:href="@{/Users}">Users</a></li>
+						<li class="nav-item"><a class="nav-link active"
+							aria-current="page" th:href="@{/Category}">Category</a></li>
+						<li class="nav-item"><a class="nav-link active"
+							aria-current="page" th:href="@{/Brands}">Brands</a></li>
+						<li class="nav-item"><a class="nav-link active"
+							aria-current="page" th:href="@{/Products}">Products</a></li>
+						<li class="nav-item"><a class="nav-link active"
+							aria-current="page" th:href="@{/Customers}">Customers</a></li>
+						<li class="nav-item"><a class="nav-link active"
+							aria-current="page" th:href="@{/Shipping}">Shipping</a></li>
+						<li class="nav-item"><a class="nav-link active"
+							aria-current="page" th:href="@{/Orders}">Orders</a></li>
+						<li class="nav-item"><a class="nav-link active"
+							aria-current="page" th:href="@{/Sales}">Sales Report</a></li>
+						<li class="nav-item"><a class="nav-link active"
+							aria-current="page" th:href="@{/Menus}">Menus</a></li>
+						<li class="nav-item"><a class="nav-link active"
+							aria-current="page" th:href="@{/Settings}">Settings</a></li>
+					</ul>
+					<form class="d-flex">
+						<input class="form-control me-2" type="search"
+							placeholder="Search" aria-label="Search">
+						<button class="btn btn-outline-success" type="submit">Search</button>
+					</form>
+				</div>
+			</div>
+		</nav>
+		<div>
+			<p>Shopit Control panel - Copyright &copy; Shopit</p>
+		</div>
+
+	</div>
+
 </body>
 </html>
