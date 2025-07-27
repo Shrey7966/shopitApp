@@ -55,11 +55,89 @@
 				</div>
 			</div>
 		</nav>
-		<div>
+		<h2>Manage Users | Create New User</h2>
+		<form th:action="@{/users/save}" method="post" th:object="${user}"
+			style="max-width: 700px; margin: 0 auto">
+
+			<!-- Email -->
+			<div class="mb-3">
+				<label for="email" class="form-label">Email address</label> <input
+					type="email" class="form-control" id="email" th:field="*{email}"
+					placeholder="name@example.com" required maxlength="128">
+			</div>
+
+			<!-- First Name -->
+			<div class="mb-3">
+				<label for="firstName" class="form-label">First Name</label> <input
+					type="text" class="form-control" id="firstName"
+					th:field="*{firstName}" placeholder="John" required minlength="3"
+					maxlength="45">
+			</div>
+
+			<!-- Last Name -->
+			<div class="mb-3">
+				<label for="lastName" class="form-label">Last Name</label> <input
+					type="text" class="form-control" id="lastName"
+					th:field="*{lastName}" placeholder="Doe" required minlength="1"
+					maxlength="45">
+			</div>
+
+			<!-- Password -->
+			<div class="mb-3">
+				<label for="password" class="form-label">Password</label> <input
+					type="password" class="form-control" id="password"
+					th:field="*{password}" placeholder="At least 1 capital, 1 symbol"
+					required minlength="8" maxlength="64">
+			</div>
+
+			<!-- Roles -->
+			<div class="mb-3">
+				<label class="form-label">Role</label>
+				<div class="form-check">
+					<th:block th:each="role:${listAllRoles}">
+						<div class="mb-3">
+							<!-- Added margin-bottom for spacing -->
+							<input type="checkbox" th:field="*{roles}" th:value="${role.ID}"
+								class="form-check-input"> <label
+								th:for="${#ids.prev('roles')}" th:text="${role.name}"
+								class="form-check-label"></label> <br>
+							<!-- Line break between name and description -->
+							<small class="text-muted" th:text="${role.description}"></small>
+						</div>
+					</th:block>
+				</div>
+
+				<!-- Enabled Checkbox -->
+				<div class="form-check mb-3">
+					<label class="form-check-label" for="enabledCheck">Enabled</label>
+					<input class="form-check-input ms-2" type="checkbox"
+						id="enabledCheck" name="enabled">
+				</div>
+
+				<!-- Photo Upload -->
+				<div class="mb-3">
+					<label for="inputGroupFile02" class="form-label">Photo</label>
+					<div class="input-group">
+						<input type="file" class="form-control" id="inputGroupFile02"
+							name="photo">
+					</div>
+				</div>
+			</div>
+
+			<!-- Submit Button -->
+			<button type="button" class="btn btn-success">Save</button>
+			<button type="button" class="btn btn-danger" id="cancelButton">Cancel</button>
+		</form>
+		<div class=text-center>
 			<p>Shopit Control panel - Copyright &copy; Shopit</p>
 		</div>
-
 	</div>
+	<script type = "text/javascript">
+	$(document).on("click",function(){
+		window.location = "[[@{/users}]]"
+});
+	
+	</script>
 
 </body>
 </html>

@@ -9,7 +9,6 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.test.annotation.Rollback;
 
 import com.shopit.common.entity.Role;
@@ -17,8 +16,6 @@ import com.shopit.common.entity.User;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = Replace.NONE)
-@EnableJpaRepositories(basePackages = "com.shopit.admin.user")
-@EntityScan(basePackages = "com.shopit.common.entity")
 @Rollback(false)
 public class UserRepositoryTests {
 
