@@ -118,4 +118,9 @@ B. JQuery
 	- Free and open source JS library
 	- Helps to simplify HTML DOM tree traversal and manipulation, event handling, CSS animation, 			Ajax.
 	-Provides JS API.
+C. BCrypt
+
+	- Its Provided by Spring Security
+	- BCrypt is a password-hashing function based on BlowFish (Symmetric-key block cipher ) and 		crypt function in Unix.
+	- It's high secure and adaptive.
 

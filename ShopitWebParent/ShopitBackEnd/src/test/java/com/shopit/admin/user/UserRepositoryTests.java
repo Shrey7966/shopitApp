@@ -90,11 +90,19 @@ public class UserRepositoryTests {
 
 	}
 
-	
 	/* DELETE OPERATION */
 	@Test
 	public void deleteUserTest() {
 		userRepo.deleteById(2);
+	}
+	
+	/* CHECK FOR UNIQUE EMAIL */
+	
+	@Test
+	public void checkUniqueEmail() {
+		String email = "bruno@outlook.com";
+		User userByEmail = userRepo.getUserByEmail(email);
+		assertThat(userByEmail).isNotNull();
 	}
 
 }
