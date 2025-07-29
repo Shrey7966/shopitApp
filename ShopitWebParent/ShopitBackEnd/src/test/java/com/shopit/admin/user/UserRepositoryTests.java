@@ -11,6 +11,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.test.annotation.Rollback;
 
+import com.shopit.admin.user.repository.UserRepository;
 import com.shopit.common.entity.Role;
 import com.shopit.common.entity.User;
 
@@ -78,7 +79,7 @@ public class UserRepositoryTests {
 		userRepo.save(user);
 
 	}
-
+	
 	@Test
 	public void updateUserRole() {
 		User user = userRepo.findById(2).get();

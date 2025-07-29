@@ -1,4 +1,4 @@
-package com.shopit.admin.user;
+package com.shopit.admin.user.repository;
 
 import org.springframework.data.repository.CrudRepository;
 

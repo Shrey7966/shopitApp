@@ -10,6 +10,9 @@
 <script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}"></script>
 <script type="text/javascript"
 	th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" th:href="@{/css/style.css}" />
 </head>
 <body>
 	<div class="container-fluid">
@@ -77,13 +80,18 @@
 			<tbody>
 				<tr th:each="user : ${listAllUsers}">
 					<th scope="row">[[${user.id}]]</th>
-					<td>[[${user.photo}]]</td>
+					<td><i class="fa-solid fa-image-portrait fa-5x"></i></td>
 					<td>[[${user.email}]]</td>
 					<td>[[${user.firstName}]]</td>
 					<td>[[${user.lastName}]]</td>
 					<td>[[${user.roles}]]</td>
-					<td>[[${user.enabled}]]</td>
-					<td>Edit &nbsp; Delete</td>
+					<td><a th:if  = "${user.enabled == true}" class="fa-solid fa-circle-check icon-link" style="color: #63E6BE;"></a>
+					<a th:if  = "${user.enabled == false}" class="fa-solid fa-circle-check icon-link" style="color: #aaaaaa;"></a></td>
+					<td><a href="/edit/${id}" title="Edit"> <i class="fa-solid fa-user-pen icon-link"></i>
+					</a> &nbsp; &nbsp; &nbsp; <a href="/delete/${id}" title="Delete"> <i
+							class="fas fa-trash text-danger"></i>
+					</a></td>
+
 				</tr>
 			</tbody>
 		</table>

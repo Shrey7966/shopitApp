@@ -1,0 +1,9 @@
+@charset "UTF-8";
+
+.icon-link {
+  text-decoration: none;
+}
+
+.icon-link:hover {
+  color: darkblue; /* optional: hover effect */
+}

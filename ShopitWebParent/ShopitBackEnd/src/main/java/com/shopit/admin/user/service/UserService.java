@@ -1,4 +1,4 @@
-package com.shopit.admin.user;
+package com.shopit.admin.user.service;
 
 import java.util.List;
 
@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.shopit.admin.user.repository.RoleRepository;
+import com.shopit.admin.user.repository.UserRepository;
 import com.shopit.common.entity.Role;
 import com.shopit.common.entity.User;
 
@@ -39,5 +41,11 @@ public class UserService {
 		String encodedPassword = passwordEncoder.encode(user.getPassword());
 		user.setPassword(encodedPassword);
 	}
+	
+	public boolean isEmailUnique(String email) {
+		User userByEmail = userRepo.getUserByEmail(email);
+		return userByEmail==null;
+	}
+	
 
 }
