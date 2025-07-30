@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -18,49 +19,74 @@ import com.shopit.common.entity.User;
 @Controller
 public class UserController {
 
-    private final ShopitBackEndApplication shopitBackEndApplication;
-	
+	private final ShopitBackEndApplication shopitBackEndApplication;
+
 	@Autowired
 	private UserService service;
 
-    UserController(ShopitBackEndApplication shopitBackEndApplication) {
-        this.shopitBackEndApplication = shopitBackEndApplication;
-    }
-	
+	UserController(ShopitBackEndApplication shopitBackEndApplication) {
+		this.shopitBackEndApplication = shopitBackEndApplication;
+	}
+
 	@GetMapping("/users")
 	public String listAll(Model model) {
 		List<User> listAllUsers = service.listAllUsers();
 		List<Role> listAllRoles = service.listAllRoles();
-		model.addAttribute("listAllUsers",listAllUsers);
-		model.addAttribute("listAllRoles",listAllRoles);
+		model.addAttribute("listAllUsers", listAllUsers);
+		model.addAttribute("listAllRoles", listAllRoles);
 		return "users";
 	}
-	
+
 	@GetMapping("/users/new")
 	public String createUser(Model model) {
-		User user = new User(); 
+		User user = new User();
 		List<Role> listAllRoles = service.listAllRoles();
 		model.addAttribute("user", user);
 		model.addAttribute("listAllRoles", listAllRoles);
+		model.addAttribute("pageTitle", "Create New User");
+		model.addAttribute("fieldDisabled", false); 
 		return "user_form";
 	}
 
-	
 	@PostMapping("/users/save")
-	public String saveUser(@ModelAttribute("user") User user,
-	                       RedirectAttributes redirectAttributes,
-	                       Model model) {
+	public String saveUser(@ModelAttribute("user") User user, RedirectAttributes redirectAttributes, Model model) {
 
-	    if (service.isEmailUnique(user.getEmail())) {
-	        service.save(user);
-	        redirectAttributes.addFlashAttribute("message", "The User has been saved successfully !!");
-	        return "redirect:/users";
-	    } else {
-	        model.addAttribute("duplicateEmailmessage", "Email is already registered, use a different email !!");
-	        model.addAttribute("listAllRoles", service.listAllRoles());
-	        return "user_form";  // No redirect
-	    }
+		if (service.isEmailUnique(user.getEmail())) {
+			service.save(user);
+			redirectAttributes.addFlashAttribute("message", "The User has been saved successfully !!");
+			return "redirect:/users";
+		} else {
+			model.addAttribute("duplicateEmailmessage", "Email is already registered, use a different email !!");
+			model.addAttribute("listAllRoles", service.listAllRoles());
+			return "user_form"; // No redirect
+		}
 	}
 
+	@GetMapping("/users/edit/{id}")
+	public String getUserById(@PathVariable Integer id, Model model,RedirectAttributes redirectAttributes) {
+		try {
+			User user = service.getUser(id);
+			model.addAttribute("user", user);
+			model.addAttribute("listAllRoles", service.listAllRoles());
+			model.addAttribute("pageTitle", "Edit User - "+ user.getId());
+			model.addAttribute("fieldDisabled", true); 
+			return "user_form";
+		} catch (Exception e) {
+			redirectAttributes.addFlashAttribute("userNotFoundException", "User not found !!");
+			return "redirect:/users";
+		}
+	}
+
+	@PostMapping("/users/update")
+	public String updateUser(User user, RedirectAttributes redirectAttributes, Model model) {
+		if (user.getPassword() != null) {
+			service.save(user);
+			redirectAttributes.addFlashAttribute("updateMmessage",
+					"The User has been Updated and Saved successfully !!");
+			return "redirect:/users";
+		} else {
+		}
+		return "users";
+	}
 
 }

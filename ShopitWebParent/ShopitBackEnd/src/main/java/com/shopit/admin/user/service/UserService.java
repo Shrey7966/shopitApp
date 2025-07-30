@@ -1,6 +1,7 @@
 package com.shopit.admin.user.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -45,6 +46,12 @@ public class UserService {
 	public boolean isEmailUnique(String email) {
 		User userByEmail = userRepo.getUserByEmail(email);
 		return userByEmail==null;
+	}
+
+	public User getUser(Integer id) {
+		// TODO Auto-generated method stub
+		User user = userRepo.findById(id).get();
+		return user;
 	}
 	
 
