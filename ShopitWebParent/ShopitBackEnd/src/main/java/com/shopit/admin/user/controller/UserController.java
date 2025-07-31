@@ -3,6 +3,7 @@ package com.shopit.admin.user.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,8 +25,12 @@ public class UserController {
 	@Autowired
 	private UserService service;
 
-	UserController(ShopitBackEndApplication shopitBackEndApplication) {
+	@Autowired
+	private PasswordEncoder passwordEncoder;
+
+	UserController(ShopitBackEndApplication shopitBackEndApplication, PasswordEncoder passwordEncoder) {
 		this.shopitBackEndApplication = shopitBackEndApplication;
+		this.passwordEncoder = passwordEncoder;
 	}
 
 	@GetMapping("/users")
@@ -70,15 +75,13 @@ public class UserController {
 			model.addAttribute("listAllRoles", service.listAllRoles());
 			model.addAttribute("pageTitle", "Edit User - " + user.getId());
 			model.addAttribute("fieldDisabled", true);
-			return "user_form";
+			return "user_form_update";
 		} catch (Exception e) {
 			redirectAttributes.addFlashAttribute("userNotFoundException", "User not found !!");
 			return "redirect:/users";
 		}
 	}
 
-
-	
 	@PostMapping("/users/update")
 	public String updateUser(@ModelAttribute("user") User user, RedirectAttributes redirectAttributes, Model model) {
 		/*
@@ -89,12 +92,12 @@ public class UserController {
 		 * the field blank or he can change the password, the field does not remain
 		 * required when it's in edit user mode.
 		 *
-		 * 		
+		 * 
 		 */
 
 		User existingUser = service.getUser(user.getId());
 
-		// ✅ Check if email is changed
+		// Check if email is changed
 		boolean emailChanged = !existingUser.getEmail().equals(user.getEmail());
 
 		if (emailChanged && !service.isEmailUnique(user.getEmail())) {
@@ -103,20 +106,16 @@ public class UserController {
 			return "user_form"; // stay on same page
 		}
 
-		// ✅ Handle password update logic
+		// Handle password update logic
 		if (user.getPassword() == null || user.getPassword().isBlank()) {
 			user.setPassword(existingUser.getPassword());
 		} else {
-			
+			user.setPassword(passwordEncoder.encode(user.getPassword()));
 		}
 
-		// ✅ Save updated user
+		// Save updated user
 		service.updateAndSave(user); // this skips email uniqueness check
 		redirectAttributes.addFlashAttribute("saveandUpdate", "User updated and saved successfully !!");
-
 		return "redirect:/users";
 	}
-	
-	
-
 }

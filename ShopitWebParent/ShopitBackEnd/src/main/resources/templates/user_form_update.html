@@ -60,6 +60,8 @@
 		<h2>Manage Users | Edit User</h2>
 		<form th:action="@{/users/update}" method="post" th:object="${user}"
 			style="max-width: 700px; margin: 0 auto">
+			
+			<!-- saveandUpdate -->
 
 			<!-- Email -->
 			<div class="mb-3">
@@ -68,6 +70,7 @@
 					placeholder="name@example.com" required maxlength="128"
 					>
 			</div>
+			<input type="hidden" name="id" th:value="${user.id}" />
 
 			<!-- First Name -->
 			<div class="mb-3">
