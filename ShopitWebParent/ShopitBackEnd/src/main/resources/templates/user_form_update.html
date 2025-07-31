@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" charset="UTF-8" content="text/html">
 <meta name="viewport"
 	content="width=device-width, initial-scale =1.0 minimum-scale =1.0">
-<title>[[${pageTitle}]]</title>
+<title>Edit User</title>
 <link rel="stylesheet" type="text/css"
 	th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
 <script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}"></script>
@@ -57,8 +57,8 @@
 				</div>
 			</div>
 		</nav>
-		<h2>Manage Users | [[${pageTitle}]]</h2>
-		<form th:action="@{/users/save}" method="post" th:object="${user}"
+		<h2>Manage Users | Edit User</h2>
+		<form th:action="@{/users/update}" method="post" th:object="${user}"
 			style="max-width: 700px; margin: 0 auto">
 
 			<!-- Email -->

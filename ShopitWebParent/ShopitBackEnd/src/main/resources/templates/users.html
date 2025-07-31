@@ -64,6 +64,11 @@
 			role="alert">
 			<p>[[${message}]]</p>
 		</div>
+		<!-- saveandUpdate -->
+		<div class="alert alert-success" th:if="${message !=null}"
+			role="alert">
+			<p>[[${saveandUpdate}]]</p>
+		</div>
 		
 		<div class="alert alert-danger" th:if="${userNotFoundException !=null}"
 			role="alert">

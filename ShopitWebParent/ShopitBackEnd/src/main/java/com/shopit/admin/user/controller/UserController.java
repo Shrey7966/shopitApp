@@ -44,7 +44,7 @@ public class UserController {
 		model.addAttribute("user", user);
 		model.addAttribute("listAllRoles", listAllRoles);
 		model.addAttribute("pageTitle", "Create New User");
-		model.addAttribute("fieldDisabled", false); 
+		model.addAttribute("fieldDisabled", false);
 		return "user_form";
 	}
 
@@ -63,13 +63,13 @@ public class UserController {
 	}
 
 	@GetMapping("/users/edit/{id}")
-	public String getUserById(@PathVariable Integer id, Model model,RedirectAttributes redirectAttributes) {
+	public String getUserById(@PathVariable Integer id, Model model, RedirectAttributes redirectAttributes) {
 		try {
 			User user = service.getUser(id);
 			model.addAttribute("user", user);
 			model.addAttribute("listAllRoles", service.listAllRoles());
-			model.addAttribute("pageTitle", "Edit User - "+ user.getId());
-			model.addAttribute("fieldDisabled", true); 
+			model.addAttribute("pageTitle", "Edit User - " + user.getId());
+			model.addAttribute("fieldDisabled", true);
 			return "user_form";
 		} catch (Exception e) {
 			redirectAttributes.addFlashAttribute("userNotFoundException", "User not found !!");
@@ -77,16 +77,46 @@ public class UserController {
 		}
 	}
 
+
+	
 	@PostMapping("/users/update")
-	public String updateUser(User user, RedirectAttributes redirectAttributes, Model model) {
-		if (user.getPassword() != null) {
-			service.save(user);
-			redirectAttributes.addFlashAttribute("updateMmessage",
-					"The User has been Updated and Saved successfully !!");
-			return "redirect:/users";
-		} else {
+	public String updateUser(@ModelAttribute("user") User user, RedirectAttributes redirectAttributes, Model model) {
+		/*
+		 * 
+		 * 
+		 * pasword field will be remain as empty and values are not displayed in the
+		 * field for security purpose, yet the user has two options either he can leave
+		 * the field blank or he can change the password, the field does not remain
+		 * required when it's in edit user mode.
+		 *
+		 * 		
+		 */
+
+		User existingUser = service.getUser(user.getId());
+
+		// ✅ Check if email is changed
+		boolean emailChanged = !existingUser.getEmail().equals(user.getEmail());
+
+		if (emailChanged && !service.isEmailUnique(user.getEmail())) {
+			model.addAttribute("duplicateEmailmessage", "Email is already registered, use a different email !!");
+			model.addAttribute("listAllRoles", service.listAllRoles());
+			return "user_form"; // stay on same page
 		}
-		return "users";
+
+		// ✅ Handle password update logic
+		if (user.getPassword() == null || user.getPassword().isBlank()) {
+			user.setPassword(existingUser.getPassword());
+		} else {
+			
+		}
+
+		// ✅ Save updated user
+		service.updateAndSave(user); // this skips email uniqueness check
+		redirectAttributes.addFlashAttribute("saveandUpdate", "User updated and saved successfully !!");
+
+		return "redirect:/users";
 	}
+	
+	
 
 }

@@ -54,5 +54,15 @@ public class UserService {
 		return user;
 	}
 	
+	public void saveAndPassword(User user) {
+		userRepo.save(user);
+	}
+
+	public void updateAndSave(User user) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	
 
 }
