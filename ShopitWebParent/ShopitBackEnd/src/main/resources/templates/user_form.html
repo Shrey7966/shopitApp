@@ -65,8 +65,7 @@
 			<div class="mb-3">
 				<label for="email" class="form-label">Email address</label> <input
 					type="email" class="form-control" id="email" th:field="*{email}"
-					placeholder="name@example.com" required maxlength="128"
-					>
+					placeholder="name@example.com" required maxlength="128">
 			</div>
 
 			<!-- First Name -->
@@ -142,13 +141,38 @@
 				<div class="modal-content">
 
 					<div class="modal-header">
-						<h5 class="modal-title">Alert</h5>
+						<h5 class="modal-title">Warning</h5>
 						<button type="button" class="btn-close" data-bs-dismiss="modal"
 							aria-label="Close"></button>
 					</div>
 
 					<div class="modal-body">
 						<p id="modalMessage">This is a placeholder message</p>
+					</div>
+
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary"
+							data-bs-dismiss="modal">OK</button>
+					</div>
+
+				</div>
+			</div>
+		</div>
+		<!-- Delete User Modal -->
+		<div class="modal fade" id="deleteMessageModal" tabindex="-1"
+			aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+
+					<div class="modal-header">
+						<h5 class="modal-title">Warning</h5>
+						<button type="button" class="btn-close" data-bs-dismiss="modal"
+							aria-label="Close"></button>
+					</div>
+
+					<div class="modal-body">
+						<p id="deleteModalMessage"></p>
+						<!-- No placeholder needed -->
 					</div>
 
 					<div class="modal-footer">
@@ -173,14 +197,17 @@
 			});
 		});
 	</script>
-	<script>
-		const message = document.getElementById("modalData").dataset.message;
-		if (message) {
-			document.getElementById("modalMessage").innerText = message;
-			const myModal = new bootstrap.Modal(document
-					.getElementById('messageModal'));
-			myModal.show();
-		}
+	<!-- Duplicate User JS -->
+	<script th:inline="javascript">
+		document.addEventListener("DOMContentLoaded", function() {
+			const modalData = /*[[${duplicateEmailmessage}]]*/'';
+			if (modalData && modalData.trim().length > 0) {
+				document.getElementById("modalMessage").innerText = modalData;
+				const myModal = new bootstrap.Modal(document
+						.getElementById('messageModal'));
+				myModal.show();
+			}
+		});
 	</script>
 
 </body>

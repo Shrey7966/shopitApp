@@ -57,6 +57,11 @@ public class UserService {
 	public void updateAndSave(User user) {
 		userRepo.save(user);
 	}
+
+	public void deleteUser(Integer id) {
+		userRepo.deleteById(id);
+		
+	}
 	
 	
 

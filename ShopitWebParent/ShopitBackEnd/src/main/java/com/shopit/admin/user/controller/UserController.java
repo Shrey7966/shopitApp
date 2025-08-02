@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -117,5 +118,29 @@ public class UserController {
 		service.updateAndSave(user); // this skips email uniqueness check
 		redirectAttributes.addFlashAttribute("saveandUpdate", "User updated and saved successfully !!");
 		return "redirect:/users";
+	}
+	
+	@GetMapping("/users/delete/{id}")
+	//http://localhost:8080/users/delete/6
+	public String deleteUser(@PathVariable Integer id, RedirectAttributes redirectAttributes,Model model ) {
+		try {
+			 System.out.println("Deleting user: " + id);
+			User user = service.getUser(id);
+			service.deleteUser(id);
+			List<User> listAllUsers = service.listAllUsers();
+			List<Role> listAllRoles = service.listAllRoles();
+			model.addAttribute("listAllUsers", listAllUsers);
+			model.addAttribute("listAllRoles", listAllRoles);
+			redirectAttributes.addFlashAttribute("userDeletedModel", "Are you sure to delete user: "+ user.getFirstName() +" ?");
+			redirectAttributes.addFlashAttribute("userDeleted", "The user has been deleted.");
+			return "redirect:/users";
+			
+		}catch (Exception e ) {
+			redirectAttributes.addFlashAttribute("userNotFoundException", "User not found !!");
+			return "redirect:/users";
+		}
+		
+		
+		
 	}
 }
