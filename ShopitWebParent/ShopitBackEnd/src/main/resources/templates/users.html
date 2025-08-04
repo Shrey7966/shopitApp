@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" charset="UTF-8" content="text/html">
 <meta name="viewport"
 	content="width=device-width, initial-scale =1.0 minimum-scale =1.0">
-<title>Homw - Shopit Admin</title>
+<title>Home - Shopit Admin</title>
 <link rel="stylesheet" type="text/css"
 	th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
 <script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}"></script>
@@ -108,39 +108,56 @@
 					</td>
 					<td><a th:href="@{/users/edit/{id}(id=${user.id})}"
 						title="Edit" class="fa-solid fa-user-pen icon-link"></a>
-						&nbsp;&nbsp;&nbsp; <a
-						th:href="@{/users/delete/{id}(id=${user.id})}" title="Delete">
+						&nbsp;&nbsp;&nbsp; <a class="delete-link"
+						th:href="@{/users/delete/{id}(id=${user.id})}" title="Delete" th:userId = "${user.id}">
 							<i class="fas fa-trash text-danger"></i>
 					</a></td>
 				</tr>
 
 			</tbody>
 		</table>
+		<div class="modal fade" id="confirmDeleteModal" tabindex="-1"
+			aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title">Confirm Delete</h5>
+						<button type="button" class="btn-close" data-bs-dismiss="modal"
+							aria-label="Close"></button>
+					</div>
+				<div class="modal-body">
+						<p id="confirmText">This is a placeholder message</p>
+					</div>
+					<div class="modal-footer">
+						<a id="confirmDeleteBtn" class="btn btn-danger " href="">Delete</a>
+						<button type="button" class="btn btn-secondary"
+							data-bs-dismiss="modal">Cancel</button>
+					</div>
+				</div>
+			</div>
+		</div>
 
 		<div class=text-center>
 			<p>Shopit Control panel - Copyright &copy; Shopit</p>
 		</div>
 	</div>
 	<!-- Delete Confirmation Modal -->
-	<div class="modal fade" id="confirmDeleteModal" tabindex="-1"
-		aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title">Confirm Delete</h5>
-					<button type="button" class="btn-close" data-bs-dismiss="modal"
-						aria-label="Close"></button>
-				</div>
-				<div class="modal-body">
-					Are you sure you want to delete <strong id="userName"></strong>?
-				</div>
-				<div class="modal-footer">
-					<a id="confirmDeleteBtn" class="btn btn-danger" href="#">Delete</a>
-					<button type="button" class="btn btn-secondary"
-						data-bs-dismiss="modal">Cancel</button>
-				</div>
-			</div>
-		</div>
-	</div>
+
+
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$(".delete-link").on("click", function(e) {
+				e.preventDefault();
+				link = $(this);
+				userId = link.attr("userId");
+				//alert("you want to delete the user?");
+				//alert($(this).attr("href"));
+				$("#confirmDeleteBtn").attr("href", link.attr("href"));
+				$("#confirmText").text("Are you sure want to delete " + userId + " ?");
+				let myModal = new bootstrap.Modal(document.getElementById('confirmDeleteModal'));
+				myModal.show();
+			});
+		})
+	</script>
 </body>
 </html>
