@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,12 +13,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.shopit.admin.ShopitBackEndApplication;
+import com.shopit.admin.user.repository.UserRepository;
 import com.shopit.admin.user.service.UserService;
 import com.shopit.common.entity.Role;
 import com.shopit.common.entity.User;
 
 @Controller
 public class UserController {
+
+    private final UserRepository userRepository;
 
 	private final ShopitBackEndApplication shopitBackEndApplication;
 
@@ -29,9 +31,10 @@ public class UserController {
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 
-	UserController(ShopitBackEndApplication shopitBackEndApplication, PasswordEncoder passwordEncoder) {
+	UserController(ShopitBackEndApplication shopitBackEndApplication, PasswordEncoder passwordEncoder, UserRepository userRepository) {
 		this.shopitBackEndApplication = shopitBackEndApplication;
 		this.passwordEncoder = passwordEncoder;
+		this.userRepository = userRepository;
 	}
 
 	@GetMapping("/users")
@@ -119,28 +122,18 @@ public class UserController {
 		redirectAttributes.addFlashAttribute("saveandUpdate", "User updated and saved successfully !!");
 		return "redirect:/users";
 	}
-	
+
 	@GetMapping("/users/delete/{id}")
-	//http://localhost:8080/users/delete/6
-	public String deleteUser(@PathVariable Integer id, RedirectAttributes redirectAttributes,Model model ) {
+	// http://localhost:8080/users/delete/6
+	public String deleteUser(@PathVariable Integer id, RedirectAttributes redirectAttributes, Model model) {
 		try {
-			 System.out.println("Deleting user: " + id);
-			User user = service.getUser(id);
 			service.deleteUser(id);
-			List<User> listAllUsers = service.listAllUsers();
-			List<Role> listAllRoles = service.listAllRoles();
-			model.addAttribute("listAllUsers", listAllUsers);
-			model.addAttribute("listAllRoles", listAllRoles);
-			redirectAttributes.addFlashAttribute("userDeletedModel", "Are you sure to delete user: "+ user.getFirstName() +" ?");
-			redirectAttributes.addFlashAttribute("userDeleted", "The user has been deleted.");
-			return "redirect:/users";
-			
-		}catch (Exception e ) {
-			redirectAttributes.addFlashAttribute("userNotFoundException", "User not found !!");
-			return "redirect:/users";
+			redirectAttributes.addFlashAttribute("userDeletedSuccessMessage", "User has been deleted successfully !!");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			redirectAttributes.addFlashAttribute("userDeletedNotFoundMessage", "No User found !!");
 		}
-		
-		
-		
+		return "redirect:/users";
+
 	}
 }

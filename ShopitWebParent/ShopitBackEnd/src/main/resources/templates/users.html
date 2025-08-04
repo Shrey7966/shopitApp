@@ -70,14 +70,14 @@
 			<p>[[${saveandUpdate}]]</p>
 		</div>
 		<!-- userDeleted -->
-		<div class="alert alert-warning" th:if="${userDeleted !=null}"
-			role="alert">
-			<p>[[${userDeleted}]]</p>
+		<div class="alert alert-warning"
+			th:if="${userDeletedSuccessMessage !=null}" role="alert">
+			<p>[[${userDeletedSuccessMessage}]]</p>
 		</div>
 
 		<div class="alert alert-danger"
-			th:if="${userNotFoundException !=null}" role="alert">
-			<p>[[${userNotFoundException}]]</p>
+			th:if="${userDeletedNotFoundMessage !=null}" role="alert">
+			<p>[[${userDeletedNotFoundMessage}]]</p>
 		</div>
 		<!-- userNotFoundException -->
 		<table class="table table-hover table-dark table-bordered">
@@ -106,11 +106,11 @@
 						<a th:if="${!user.enabled}"
 						class="fa-solid fa-circle-check icon-link" style="color: #aaaaaa;"></a>
 					</td>
-					<td><a href="javascript:void(0);"
-						data-user-id="[[${user.id}]]"
-						data-user-name="[[${user.firstName}]]" data-bs-toggle="modal"
-						data-bs-target="#confirmDeleteModal" title="Delete"> <i
-							class="fas fa-trash text-danger"></i>
+					<td><a th:href="@{/users/edit/{id}(id=${user.id})}"
+						title="Edit" class="fa-solid fa-user-pen icon-link"></a>
+						&nbsp;&nbsp;&nbsp; <a
+						th:href="@{/users/delete/{id}(id=${user.id})}" title="Delete">
+							<i class="fas fa-trash text-danger"></i>
 					</a></td>
 				</tr>
 
@@ -142,20 +142,5 @@
 			</div>
 		</div>
 	</div>
-
-
-
 </body>
-<script>
-document.querySelectorAll("[data-bs-target='#confirmDeleteModal']").forEach(button => {
-	  button.addEventListener("click", () => {
-	    const userId = button.getAttribute("data-user-id");
-	    const userName = button.getAttribute("data-user-name");
-	    document.getElementById("confirmDeleteBtn").setAttribute("href", `/users/delete/${userId}`);
-	    document.getElementById("confirmDeleteModalLabel").textContent = `Delete ${userName}?`;
-	  });
-	});
-</script>
-
-
 </html>

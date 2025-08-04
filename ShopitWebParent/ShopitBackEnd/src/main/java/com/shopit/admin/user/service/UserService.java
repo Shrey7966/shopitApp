@@ -58,9 +58,12 @@ public class UserService {
 		userRepo.save(user);
 	}
 
-	public void deleteUser(Integer id) {
+	public void deleteUser(Integer id) throws Exception {
+		Long countById = userRepo.countById(id);
+		if(countById == null || countById ==0) {
+			throw new Exception();
+		}
 		userRepo.deleteById(id);
-		
 	}
 	
 	
