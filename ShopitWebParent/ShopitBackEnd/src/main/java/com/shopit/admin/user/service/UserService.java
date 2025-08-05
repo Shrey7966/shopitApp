@@ -12,7 +12,10 @@ import com.shopit.admin.user.repository.UserRepository;
 import com.shopit.common.entity.Role;
 import com.shopit.common.entity.User;
 
+import jakarta.transaction.Transactional;
+
 @Service
+@Transactional
 public class UserService {
 
 	@Autowired
@@ -66,6 +69,9 @@ public class UserService {
 		userRepo.deleteById(id);
 	}
 	
+	public void updateUserEnabledStatus(Integer id, boolean enabled) {
+		userRepo.updateEnabledStatus(id, enabled);
+	}
 	
 
 }
