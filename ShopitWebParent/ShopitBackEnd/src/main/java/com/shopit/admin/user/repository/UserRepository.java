@@ -12,5 +12,8 @@ public interface UserRepository extends CrudRepository<User, Integer> {
 	public User getUserByEmail(@Param("email") String email);
 	
 	public Long countById(Integer id) ;
+	
+	@Query("UPDATE user u SET u.enabled = ?2WHERE u.id = ?1")
+	public void updateEnabledStatus(Integer id, boolean enabled);
 
 }
