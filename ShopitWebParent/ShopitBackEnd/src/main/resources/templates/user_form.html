@@ -119,11 +119,9 @@
 
 				<!-- Photo Upload -->
 				<div class="mb-3">
-					<label for="inputGroupFile02" class="form-label">Photo</label>
-					<div class="input-group">
-						<input type="file" class="form-control" id="inputGroupFile02"
-							name="photo">
-					</div>
+					<label for="formFileSm" class="form-label">Photo</label> <input class="form-control form-control-sm"
+						id="formFileSm" type="file" accept = "image/png image/jpeg" >
+						<img id = "thumbnail" th:src="@{/images/default-user.png}">
 				</div>
 			</div>
 
@@ -158,7 +156,7 @@
 				</div>
 			</div>
 		</div>
-		
+
 
 
 		<div class=text-center>
