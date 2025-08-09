@@ -39,7 +39,7 @@ public class UserRepositoryTests {
 
 	}
 
-	/* Create the user with multiple roles */
+	/* Create the user with multiple roles like admin, sales person, assistant etc */
 	@Test
 	public void createUsersWithTwoRoles() {
 		User userKhushi = new User("khushisrinivas123@gmail.com", "KS219", "Khushi", "Srinivas");
