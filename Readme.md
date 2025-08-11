@@ -10,7 +10,7 @@ A. Key Actors
 2. Editor
 3. Salesperson
 4. Shipper
-5. Assistant
+5. Assistant,
 
 	##Back End  >> Use cases for Editors
 	1. Manage categories
